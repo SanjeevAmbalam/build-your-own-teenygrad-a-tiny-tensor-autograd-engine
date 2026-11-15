@@ -71,8 +71,18 @@ def rand(shape, seed=None):
 # Step 12 - lazybuffer_permute (not yet solved)
 # TODO: implement
 
-# Step 13 - Function (not yet solved)
-# TODO: implement
+# Step 13 - Function
+class Function:
+    def __init__(self, *tensors):
+        # TODO: record needs_input_grad, requires_grad, and parents for backprop
+        self.needs_input_grad = [t.requires_grad for t in tensors]
+        self.requires_grad = False
+        for t in tensors:
+            if t.requires_grad == True:
+                self.requires_grad = True
+                self.parents = tensors
+            elif t.requires_grad == None:
+                self.requires_grad = None
 
 # Step 14 - function_forward_backward_stubs (not yet solved)
 # TODO: implement
