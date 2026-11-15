@@ -78,8 +78,31 @@ def e(self, op):
     return LazyBuffer(out)
 LazyBuffer.e = e
 
-# Step 8 - lazybuffer_binary_e (not yet solved)
-# TODO: implement
+# Step 8 - lazybuffer_binary_e
+import enum
+import numpy as np
+def lazybuffer_binary_e(self, op, other):
+    x = self._np
+    y = other._np
+
+    if op.name == "ADD":
+        out = x + y
+    elif op.name == "SUB":
+        out = x - y
+    elif op.name == "MUL":
+        out = x * y
+    elif op.name == "DIV":
+        out = x / y
+    elif op.name == "CMPLT":
+        out = (x < y).astype(a.dtype)
+    elif op.name == "MAX":
+        out = np.maximum(x, y).astype(a.dtype)
+    else:
+        raise ValueError(f"Unsupported binary operation: {op.name}")
+
+    return LazyBuffer(out)
+
+LazyBuffer.lazybuffer_binary_e = lazybuffer_binary_e
 
 # Step 9 - lazybuffer_r (not yet solved)
 # TODO: implement
