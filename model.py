@@ -53,8 +53,30 @@ def rand(shape, seed=None):
     out = out.astype(np.float32)
     return LazyBuffer(out)
 
-# Step 7 - lazybuffer_unary_e (not yet solved)
-# TODO: implement
+# Step 7 - lazybuffer_unary_e
+import numpy as np
+import enum
+
+def e(self, op):
+    # TODO: apply a unary elementwise op (NEG, RELU, LOG, EXP, SQRT, SIGMOID)
+    name = op.name
+    x = self._np
+    if name == "RELU":
+        out = np.maximum(x, 0)
+    elif name == "NEG":
+        out = -x
+    elif name == "EXP":
+        out = np.exp(x)
+    elif name == "SQRT":
+        out = np.sqrt(x)
+    elif name == "SIGMOID":
+        out = 1.0/(1.0+np.exp(-x))
+    elif name == "LOG":
+        out = np.log(x)
+    else:
+        raise ValueError()
+    return LazyBuffer(out)
+LazyBuffer.e = e
 
 # Step 8 - lazybuffer_binary_e (not yet solved)
 # TODO: implement
