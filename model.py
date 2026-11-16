@@ -134,8 +134,12 @@ def expand(self, new_shape):
     x = x + buffer_arr 
     return LazyBuffer(x)
 
-# Step 12 - lazybuffer_permute (not yet solved)
-# TODO: implement
+# Step 12 - lazybuffer_permute
+import numpy as np
+def permute(self, order):
+    # TODO: return a new LazyBuffer with axes reordered according to order
+    x = self._np
+    return LazyBuffer(x.transpose(order))
 
 # Step 13 - Function
 class Function:
