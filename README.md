@@ -20,7 +20,7 @@ python scaffold.py
 - [x] **8.** lazybuffer_binary_e
 - [x] **9.** lazybuffer_r
 - [x] **10.** lazybuffer_reshape
-- [ ] **11.** lazybuffer_expand
+- [x] **11.** lazybuffer_expand
 - [ ] **12.** lazybuffer_permute
 - [x] **13.** Function
 - [x] **14.** function_forward_backward_stubs
