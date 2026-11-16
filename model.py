@@ -166,8 +166,25 @@ def function_forward_backward_stubs():
 
     return Function
 
-# Step 15 - apply (not yet solved)
-# TODO: implement
+# Step 15 - apply
+@classmethod
+def apply(cls, *tensors, **kwargs):
+    # TODO: build the Function, run forward on the input buffers, wrap in a
+    # Tensor, and link out._ctx when a gradient is needed.
+    ctx = cls(*tensors)
+    buffer_list = [t.lazydata for t in tensors]
+    out=ctx.forward(*buffer_list, **kwargs)
+    result = Tensor(out,requires_grad=ctx.requires_grad)
+    if ctx.requires_grad:
+        result._ctx = ctx
+    return result
+
+# Provided: attaches apply onto the Function base class. Leave this as-is.
+for _obj in list(globals().values()):
+    if isinstance(_obj, type):
+        for _k in _obj.__mro__:
+            if _k.__name__ == 'Function':
+                _k.apply = apply
 
 # Step 16 - Neg (not yet solved)
 # TODO: implement
