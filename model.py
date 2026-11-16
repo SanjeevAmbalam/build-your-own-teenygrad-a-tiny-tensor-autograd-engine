@@ -94,9 +94,9 @@ def lazybuffer_binary_e(self, op, other):
     elif op.name == "DIV":
         out = x / y
     elif op.name == "CMPLT":
-        out = (x < y).astype(a.dtype)
+        out = (x < y).astype(x.dtype)
     elif op.name == "MAX":
-        out = np.maximum(x, y).astype(a.dtype)
+        out = np.maximum(x, y).astype(x.dtype)
     else:
         raise ValueError(f"Unsupported binary operation: {op.name}")
 
@@ -197,8 +197,18 @@ class Neg(Function):
         # TODO: return the negated incoming gradient
         return LazyBuffer(-grad_output._np)
 
-# Step 17 - Relu (not yet solved)
-# TODO: implement
+# Step 17 - Relu
+import numpy as np
+UnaryOps, BinaryOps, ReduceOps, MovementOps = make_op_enums()
+class Relu(Function):
+    def forward(self, x):
+        self.ret = x.e(UnaryOps.RELU)
+        return self.ret
+
+    def backward(self, grad_output):
+        zero = LazyBuffer.const(0, self.ret._np.shape)
+        mask = lazybuffer_binary_e(zero, BinaryOps.CMPLT, self.ret)
+        return lazybuffer_binary_e(mask, BinaryOps.MUL, grad_output)
 
 # Step 18 - Log (not yet solved)
 # TODO: implement
